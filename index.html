@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/estilos.css">
+    <title>Almacen de frutas y verduras</title>
+</head>
+<body>
+    <section id="componente">
+       <header class="Titulo">
+<h1>Almacen de frutas y verduras</h1>
+</header>
+<hr>  
+<div class="container mt-4">
+
+    <div class="row">
+      
+     
+      <div class="col-md-8">
+
+        <table class="table table-bordered align-middle">
+          <thead class="table-light">
+            <tr>
+              <th></th>
+               <th>Imagen</th>
+              <th>Cantidad</th>
+              <th>Descripción</th>
+              <th>Precio</th>
+              <th>Importe</th>
+            </tr>
+          </thead>
+
+          <tr v-for="(fruta, index) in frutas" :key="index">
+
+  <td class="text-center">
+    <button class="btn btn-danger btn-sm"
+      @click="frutas.splice(index, 1)">
+      🗑
+    </button>
+  </td>
+  <td class="text-center">
+  <img
+    :src="fruta.imagen || 'https://via.placeholder.com/50'"
+    :alt="fruta.nombre"
+    class="img-fruta"
+  >
+</td>
+
+  <td>
+    <div class="d-flex justify-content-center align-items-center gap-1">
+      <button class="btn btn-danger btn-sm" @click="fruta.cantidad++">+</button>
+
+      <input
+        type="text"
+        class="form-control form-control-sm text-center w-50"
+        v-model.number="fruta.cantidad"
+      >
+
+      <button
+        class="btn btn-danger btn-sm"
+        @click="fruta.cantidad--"
+        :disabled="fruta.cantidad === 0">
+        -
+      </button>
+    </div>
+  </td>
+
+  <td>{{ fruta.nombre }}</td>
+  <td>${{ fruta.precio }}</td>
+  <td>${{ fruta.cantidad * fruta.precio }}</td>
+
+</tr>
+
+
+
+            </tr>
+          </tbody>
+        </table>
+
+      
+        <p class="fw-bold">Frutas:{{cuantasFrutas}}</p>
+
+        
+        <div class="text-end">
+          <p>Subtotal:${{subtotal}}</p>
+          <p>IVA: ${{iva.toFixed(2)}}</p>
+          <p class="fw-bold fs-5">Total:${{total.toFixed(2)}}</p>
+        </div>
+
+      </div>
+
+     
+      <div class="col-md-4">
+
+        <div class="card">
+          <div class="card-header text-center fw-bold">
+            Nueva Fruta
+          </div>
+
+          <div class="card-body">
+            <div class="mb-2">
+              <label class="form-label">Nombre:</label>
+              <input type="text" class="form-control" v-model="nuevaFruta.nombre">
+            </div>
+
+            <div class="mb-2">
+              <label class="form-label">Cantidad:</label>
+              <input type="number" class="form-control" v-model.number="nuevaFruta.cantidad">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Precio:</label>
+              <input type="number"class="form-control"v-model.number="nuevaFruta.precio" min="0" step="0.01">
+
+            </div>
+            <div class="mb-3">
+  <label class="form-label">Imagen (URL):</label>
+  <input
+    type="text"
+    class="form-control"
+    v-model="nuevaFruta.imagen"
+  >
+</div>
+
+
+            <button class="btn btn-danger w-100" @click="agregarFruta()">
+              Agregar
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+    </section>
+<script src="../js/enlace_malvado.js"></script>
+    <script src="../js/script.js"></script>    
+</body>
+</html>
